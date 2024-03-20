@@ -60,3 +60,36 @@ const startApp = async () => {
         console.error(error);
     }
 };
+
+// Function to view all departments
+const viewAllDepartments = async () => {
+    try {
+        const [rows] = await connection.query('SELECT * FROM department');
+        console.table(rows);
+        await startApp();
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+// Function to view all roles
+const viewAllRoles = async () => {
+    try {
+        const [rows] = await connection.query('SELECT * FROM role');
+        console.table(rows);
+        await startApp();
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+// Function to view all employees
+const viewAllEmployees = async () => {
+    try {
+        const [rows] = await connection.query('SELECT * FROM employee');
+        console.table(rows);
+        await startApp();
+    } catch (error) {
+        console.error(error);
+    }
+};
