@@ -93,3 +93,31 @@ const viewAllEmployees = async () => {
         console.error(error);
     }
 };
+
+// Function to add a role
+const addRole = async () => {
+    try {
+        const { title, salary, departmentId } = await inquirer.prompt([
+            {
+                name: 'title',
+                type: 'input',
+                message: 'What is the title of the role?'
+            },
+            {
+                name: 'salary',
+                type: 'input',
+                message: 'What is the salary of the role?'
+            },
+            {
+                name: 'departmentId',
+                type: 'input',
+                message: 'What is the department ID for this role?'
+            }
+        ]);
+        await connection.query('INSERT INTO role SET ?', { title, salary, department_id: departmentId });
+        console.log(`Role added: ${title}`);
+        await startApp();
+    } catch (error) {
+        console.error(error);
+    }
+};
