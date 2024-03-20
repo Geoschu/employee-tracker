@@ -121,3 +121,36 @@ const addRole = async () => {
         console.error(error);
     }
 };
+
+// Function to add an employee
+const addEmployee = async () => {
+    try {
+        const { firstName, lastName, roleId, managerId } = await inquirer.prompt([
+            {
+                name: 'firstName',
+                type: 'input',
+                message: 'What is the first name of the employee?'
+            },
+            {
+                name: 'lastName',
+                type: 'input',
+                message: 'What is the last name of the employee?'
+            },
+            {
+                name: 'roleId',
+                type: 'input',
+                message: 'What is the role ID for this employee?'
+            },
+            {
+                name: 'managerId',
+                type: 'input',
+                message: 'What is the manager ID for this employee?'
+            }
+        ]);
+        await connection.query('INSERT INTO employee SET ?', { first_name: firstName, last_name: lastName, role_id: roleId, manager_id: managerId });
+        console.log(`Employee added: ${firstName} ${lastName}`);
+        await startApp();
+    } catch (error) {
+        console.error(error);
+    }
+};
