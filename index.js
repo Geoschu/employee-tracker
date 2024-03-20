@@ -12,47 +12,51 @@ const connection = mysql.createConnection({
 });
 
 // Function to start the application
-const startApp = () => {
-  inquirer.prompt({
-      name: 'action',
-      type: 'list',
-      message: 'What would you like to do?',
-      choices: [
-          'View all departments',
-          'View all roles',
-          'View all employees',
-          'Add a department',
-          'Add a role',
-          'Add an employee',
-          'Update an employee role',
-          'Exit'
-      ]
-  }).then(answer => {
-      switch (answer.action) {
-          case 'View all departments':
-              viewAllDepartments();
-              break;
-          case 'View all roles':
-              viewAllRoles();
-              break;
-          case 'View all employees':
-              viewAllEmployees();
-              break;
-          case 'Add a department':
-              addDepartment();
-              break;
-          case 'Add a role':
-              addRole();
-              break;
-          case 'Add an employee':
-              addEmployee();
-              break;
-          case 'Update an employee role':
-              updateEmployeeRole();
-              break;
-          case 'Exit':
-              connection.end();
-              break;
-      }
-  });
+const startApp = async () => {
+    try {
+        const { action } = await inquirer.prompt({
+            name: 'action',
+            type: 'list',
+            message: 'What would you like to do?',
+            choices: [
+                'View all departments',
+                'View all roles',
+                'View all employees',
+                'Add a department',
+                'Add a role',
+                'Add an employee',
+                'Update an employee role',
+                'Exit'
+            ]
+        });
+
+        switch (action) {
+            case 'View all departments':
+                await viewAllDepartments();
+                break;
+            case 'View all roles':
+                await viewAllRoles();
+                break;
+            case 'View all employees':
+                await viewAllEmployees();
+                break;
+            case 'Add a department':
+                await addDepartment();
+                break;
+            case 'Add a role':
+                await addRole();
+                break;
+            case 'Add an employee':
+                await addEmployee();
+                break;
+            case 'Update an employee role':
+                await updateEmployeeRole();
+                break;
+            case 'Exit':
+                connection.end();
+                break;
+        }
+    } catch (error) {
+        console.error(error);
+    }
 };
