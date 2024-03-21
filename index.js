@@ -154,3 +154,29 @@ const addEmployee = async () => {
         console.error(error);
     }
 };
+
+// Function to update an employee role
+const updateEmployeeRole = async () => {
+    try {
+        const { employeeId, newRoleId } = await inquirer.prompt([
+            {
+                name: 'employeeId',
+                type: 'input',
+                message: 'What is the ID of the employee you want to update?'
+            },
+            {
+                name: 'newRoleId',
+                type: 'input',
+                message: 'What is the new role ID for this employee?'
+            }
+        ]);
+        await connection.query('UPDATE employee SET ? WHERE ?', [{ role_id: newRoleId }, { id: employeeId }]);
+        console.log(`Employee role updated successfully`);
+        await startApp();
+    } catch (error) {
+        console.error(error);
+    }
+};
+
+// Start the application
+startApp();
